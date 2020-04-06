@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Include meta tag to ensure proper rendering and touch zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Include jQuery Mobile stylesheets -->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+    <!-- Include the jQuery library -->
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <!-- Include the jQuery Mobile library -->
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script>
+         $(document).ready(function(){
+            $(function(){
+                $("li").bind( "taphold", tapholdHandler );
+                
+                function tapholdHandler( event ){
+                    $( event.target ).addClass("taphold");
+                }
+            });
+        });
+        $(document).on( "pageinit", "#aboutPage", function(event) {
+            alert( "Selamat datang di koprasi PPM" );
+        });
+        $("#tambah").on( "vclick", "p", function() {
+            $( this ).append( "WELCOME TO KOMPRASI LAGI" );
+        });
+        $("#hitung").on( "vmousedown", "p", function() {
+            $( this ).append( "WELCOME TO KOMPRASI LAGI" );
+        });
+        co = 1;
+        pinjaman;
+        lama;
+        hasil;
+        function hitu(){
+            pinjaman = document.getElementById("pinjaman").value;
+            lama = document.getElementById("lama").value;
+            if(parseInt(lama)>0 && parseInt(lama)<=6){
+                hasil = parseInt(pinjaman) + (pinjaman * 2 /100 * parseInt(lama)) 
+            }
+            else if(parseInt(lama)>6 && parseInt(lama)<=12){
+                hasil = parseInt(pinjaman) + (pinjaman * 15 /1000 * parseInt(lama))
+            }
+            else if(parseInt(lama)>12){
+                hasil = parseInt(pinjaman) + (pinjaman * 1 /100 * parseInt(lama))
+            }
+            document.getElementById("totalKembali").innerHTML = hasil;
+        }
+        function tambah(){
+            var node = "<h3>Pinjaman ke-" + co + ":</h3>";
+            co++;
+            perbulan = hasil * 1.0/parseInt(lama);
+            node = node + "<ul>"
+            for(i = 1;i<=parseInt(lama);i++){
+                node = node + "<li> Pinjaman bulan ke-" + i + ": " + perbulan.toString() + "</li>";
+            }
+            node = node + "</ul><br><br>"
+            $('#lis').append(node);
+        }
+    </script>
+</head>
+<body>
+    <div data-role="page" id="pageone">
+        <div data-role="header">
+            <div data-role="navbar">
+                <ul>
+                  <li><a href="#pageone">Input Pinjaman</a></li>
+                  <li><a href="#pagetwo">Informasi Cicilan</a></li>
+                </ul>
+              </div>
+        </div>
+        <div role="main" class="ui-content">
+            <label for="text-basic">Pinjaman:</label>
+            <input type="text" name="text-basic" id="pinjaman" value="">
+            <label for="slider-fill">Lama Pinjaman:</label>
+            <input id = "lama" type="range" name="slider-fill" id="slider-fill" value="6" min="0" max="36" step="1" data-highlight="true"> 
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <h3>Total Pengembalian: </h3>
+                    <h2 id = "totalKembali"></h2>
+                </div> 
+                <div class="ui-block-b">
+                    <form>
+                        <div class="ui-input-btn ui-btn ui-corner-all ui-shadow">
+                            Hitung
+                            <input id = "hitung" type="button" data-enhanced="true" value="Input value" onclick = "hitu()">
+                        </div>
+                    </form>      
+                </div>
+            </div>
+            <form>
+                <div class="ui-input-btn ui-btn ui-corner-all ui-shadow">
+                    Masukan List
+                    <input id = "tambah" type="button" data-enhanced="true" value="Input value" onclick = "tambah()" >
+                </div>
+            </form>
+        </div>
+        <div data-role="footer">
+            <h4>Page Footer</h4>
+        </div>
+    </div>
+    
+    
+    <div data-role="page" id="pagetwo">
+        <div data-role="header">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#pageone">Input Pinjaman</a></li>
+                    <li><a href="#pagetwo">Informasi Cicilan</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id = "lis" role="main" class="ui-content">
+           
+        </div>
+        <div data-role="footer">
+            <h4>Page Footer</h4>
+        </div>
+    </div>
+</body>
+</html>
